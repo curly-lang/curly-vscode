@@ -2,6 +2,7 @@
 	"name": "curly-vscode",
 	"displayName": "curly-vscode",
 	"version": "0.0.1",
+	"license": "GPLv2",
 	"engines": {
 		"vscode": "^1.54.0"
 	},
