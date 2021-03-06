@@ -1,0 +1,96 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "scopeName": "source.curly",
+    "patterns": [{"include": "#expression"}],
+    "repository": {
+        "expression": {
+            "patterns": [
+                {"include": "#other-keywords"},
+                {"include": "#control-keywords"},
+                {"include": "#constants"},
+                {"include": "#string"},
+                {"include": "#operator"},
+                {"include": "#type"},
+                {"include": "#numeric"},
+                {"include": "#line-comment"},
+                {"include": "#block-comment"}
+            ]
+        },
+        "other-keywords": {
+            "match": "\\b(let|lambda|in|module|import|as|extern|type|enum|ptr|class)\\b",
+            "name": "keyword.other"
+        },
+        "control-keywords": {
+            "match": "\\b(for|some|all|where|pass|stop|if|then|else|match|to)\\b",
+            "name": "keyword.control"
+        },
+        "operator": {
+            "match": "\\*|\\+|\\/|%|-|<=|>=|==|!=|<|>|=|&|\\||\\^|::?|\\.|,|;|\\$|=>|->|\\b(and|or|xor)\\b",
+            "name": "keyword.operator"
+        },
+        "string": {
+            "begin": "\"",
+            "beginCaptures": {
+                "0": {
+                    "name": "punctuation.definition.string.begin"
+                }
+            },
+            "end": "\"",
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.definition.string.end"
+                }
+            },
+            "name": "string.quoted.double.curly",
+            "patterns": [
+                {
+                    "match": "\\\\.",
+                    "name": "constant.character.escape.curly"
+                }
+            ]
+        },
+        "char": {
+            "begin": "'",
+            "beginCaptures": {
+                "0": {
+                    "name": "punctuation.definition.string.begin"
+                }
+            },
+            "end": "'",
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.definition.string.end"
+                }
+            },
+            "name": "string.quoted.single.curly",
+            "patterns": [
+                {
+                    "match": "\\\\.",
+                    "name": "constant.character.escape.curly"
+                }
+            ]
+        },
+        "numeric": {
+            "match": "\\b(0x[0-9a-fA-F]+|0b[01]+|[0-9]+u|[0-9a-fA-F]+h|[01]+b|[0-9]+(\\.[0-9]*([eE][+-]?[0-9]+)?|[eE][+-]?[0-9]+)|[0-9]+)\\b",
+            "name": "constant.numeric.curly"
+        },
+        "type": {
+            "match": "[A-Z][a-zA-Z0-9_']*",
+            "name": "support.type.curly"
+        },
+        "constants": {
+            "match": "\\b(true|false)\\b",
+            "name": "constant.other.curly"
+        },
+        "line-comment": {
+            "begin": "^#",
+            "end": "$",
+            "name": "comment.line.number-sign.curly"
+        },
+        "block-comment": {
+            "begin": "{-",
+            "end": "-}",
+            "name": "comment.block.curly"
+        }
+    }
+}

@@ -2,26 +2,40 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
+import { LanguageClient, LanguageClientOptions, ServerOptions } from 'vscode-languageclient/node';
+
+let client: LanguageClient;
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+	const curlsPath: string | undefined = vscode.workspace.getConfiguration("curly").get("curlsPath");
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "curly-vscode" is now active!');
+	if (!curlsPath || curlsPath.length === 0) {
+		vscode.window.showInformationMessage("To use curls, configure the Curls Path setting and reload Visual Studio Code.");
+		return;
+	}
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('curly-vscode.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
+	const serverOptions: ServerOptions = {
+		run: {command: curlsPath},
+		debug: {command: curlsPath}
+	};
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from curly-vscode!');
-	});
+	const clientOptions: LanguageClientOptions = {
+		documentSelector: [{scheme: "file", language: "curly"}]
+	};
 
-	context.subscriptions.push(disposable);
+	client = new LanguageClient(
+		"curls",
+		"Curls",
+		serverOptions,
+		clientOptions	
+	);
+
+	client.start();
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+	client?.stop();
+}
