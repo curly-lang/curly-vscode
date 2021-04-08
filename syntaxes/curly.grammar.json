@@ -7,15 +7,38 @@
             "patterns": [
                 {"include": "#other-keywords"},
                 {"include": "#control-keywords"},
+                
                 {"include": "#constants"},
                 {"include": "#string"},
-                {"include": "#operator"},
-                {"include": "#type"},
+                {"include": "#char"},
                 {"include": "#numeric"},
+
+                {"include": "#namespaces"},
+                {"include": "#module-names"},
+                {"include": "#variable-names"},
+
+                {"include": "#purity-annotations"},
+
+                {"include": "#type"},
+                {"include": "#other-typenames"},
+
+                {"include": "#operator"},
+
                 {"include": "#line-comment"},
                 {"include": "#block-comment"}
             ]
         },
+
+        "type": {
+            "match": "\\b[A-Z]\\w*\\b",
+            "name": "support.type.curly"
+        },
+        "other-typenames": {
+            "match": "\\b(?<=enum|ptr)( +)(\\w+)\\b",
+            "name": "entity.name.tag"
+        },
+
+
         "other-keywords": {
             "match": "\\b(let|lambda|in|module|import|as|extern|type|enum|ptr|class)\\b",
             "name": "keyword.other"
@@ -24,9 +47,25 @@
             "match": "\\b(for|some|all|where|pass|stop|if|then|else|match|to)\\b",
             "name": "keyword.control"
         },
-        "operator": {
-            "match": "\\*|\\+|\\/|%|-|<=|>=|==|!=|<|>|=|&|\\||\\^|::?|\\.|,|;|\\$|=>|->|\\b(and|or|xor)\\b",
-            "name": "keyword.operator"
+
+
+        "namespaces": {
+            "match": "\\b(\\w+)(\\:\\:)\\b",
+            "name": "support.variable.namespace.curly"
+        },
+        "module-names": {
+            "match": "\\b(?<=module|import|as)( +)((\\w|::)+)\\b",
+            "name": "support.variable.module.curly"
+        },
+        "variable-names": {
+            "match": "\\b[a-z0-9_]\\w*?\\b",
+            "name": "variable.parameter.curly"
+        },
+
+
+        "constants": {
+            "match": "\\b(true|false)\\b",
+            "name": "constant.language.boolean.curly"
         },
         "string": {
             "begin": "\"",
@@ -74,14 +113,20 @@
             "match": "\\b(0x[0-9a-fA-F]+|0b[01]+|[0-9]+u|[0-9a-fA-F]+h|[01]+b|[0-9]+(\\.[0-9]*([eE][+-]?[0-9]+)?|[eE][+-]?[0-9]+)|[0-9]+)\\b",
             "name": "constant.numeric.curly"
         },
-        "type": {
-            "match": "[A-Z][a-zA-Z0-9_']*",
-            "name": "support.type.curly"
+
+
+        "purity-annotations" : {
+            "match": "@\\b(pure|impure)\\b",
+            "name": "meta.tag.purity.curly"
         },
-        "constants": {
-            "match": "\\b(true|false)\\b",
-            "name": "constant.other.curly"
+
+
+        "operator": {
+            "match": "\\*|\\+|\\/|%|-|<=|>=|==|!=|<|>|=|&|\\||\\^|\\.|,|;|\\$|=>|->|\\b(and|or|xor)\\b",
+            "name": "keyword.operator"
         },
+
+
         "line-comment": {
             "begin": "^#",
             "end": "$",
